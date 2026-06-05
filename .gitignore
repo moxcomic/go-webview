@@ -1,0 +1,16 @@
+# Go test and coverage artifacts
+*.test
+*.out
+coverage.txt
+
+# Compiled example binaries (the embedded native libraries under embedded/ are
+# committed on purpose and must NOT be ignored).
+/examples/bind/bind
+/examples/simple/simple
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*~
+*.swp
