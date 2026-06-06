@@ -2,4 +2,4 @@ module github.com/moxcomic/go-webview
 
 go 1.21
 
-require github.com/ebitengine/purego v0.8.2
+require github.com/ebitengine/purego v0.10.1
