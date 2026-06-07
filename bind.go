@@ -100,7 +100,7 @@ func makeFuncWrapper(f any) (func(id, req string) (any, error), error) {
 	numIn := funcType.NumIn()
 	isVariadic := funcType.IsVariadic()
 	inTypes := make([]reflect.Type, numIn)
-	for i := 0; i < numIn; i++ {
+	for i := range numIn {
 		inTypes[i] = funcType.In(i)
 	}
 

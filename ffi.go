@@ -30,10 +30,7 @@ func goString(c uintptr) string {
 		return ""
 	}
 	var length int
-	for {
-		if *(*byte)(unsafe.Add(ptr, uintptr(length))) == '\x00' {
-			break
-		}
+	for *(*byte)(unsafe.Add(ptr, uintptr(length))) != '\x00' {
 		length++
 	}
 	return string(unsafe.Slice((*byte)(ptr), length))

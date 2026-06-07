@@ -52,9 +52,7 @@ func main() {
 	w.SetHtml(html)
 
 	// Binding for count which immediately returns.
-	if err := w.Bind("count", func(delta int64) int64 {
-		return count.Add(delta)
-	}); err != nil {
+	if err := w.Bind("count", count.Add); err != nil {
 		panic(err)
 	}
 
