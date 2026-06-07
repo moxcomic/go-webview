@@ -31,7 +31,7 @@ func extract() error {
 	}
 
 	dir := filepath.Join(base, "go-webview", version)
-	if err := os.MkdirAll(dir, 0o700); err != nil {
+	if err = os.MkdirAll(dir, 0o700); err != nil {
 		return err
 	}
 

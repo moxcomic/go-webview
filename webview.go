@@ -115,16 +115,16 @@ func New(debug bool) (WebView, error) { return NewWindow(debug, nil) }
 // here. It returns an error if the native library cannot be loaded or the window
 // cannot be created.
 func NewWindow(debug bool, window unsafe.Pointer) (WebView, error) {
-	loadOnce.Do(func() { loadErr = loadLibraryAndSymbols() })
-	if loadErr != nil {
-		return nil, loadErr
+	loadOnce.Do(func() { errLoad = loadLibraryAndSymbols() })
+	if errLoad != nil {
+		return nil, errLoad
 	}
 
 	r1, _, _ := purego.SyscallN(pCreate, boolToInt(debug), uintptr(window))
 	if r1 == 0 {
 		return nil, errors.New("webview: failed to create window")
 	}
-	return &webview{handle: r1, alive: true}, nil
+	return &webview{handle: r1, alive: true, mu: sync.Mutex{}, wg: sync.WaitGroup{}}, nil
 }
 
 // webview is the concrete implementation of WebView using native library calls.
