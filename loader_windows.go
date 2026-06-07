@@ -46,7 +46,7 @@ func libraryPath() string {
 
 	for _, dir := range dirs {
 		n := filepath.Join(dir, name)
-		if _, err := os.Stat(n); err == nil {
+		if _, err := os.Stat(n); err == nil { //nolint:gosec // trusted lookup dirs (WEBVIEW_PATH/exe dir), not user-tainted
 			return n
 		}
 	}

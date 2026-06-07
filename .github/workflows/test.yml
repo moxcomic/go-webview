@@ -24,19 +24,17 @@ jobs:
           - windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
 
       - name: Run linter
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v9
         with:
-          # Pinned to the last v1 release: .golangci.yml uses the preset-based
-          # v1 schema, which golangci-lint v2 ("latest") no longer supports.
-          version: v1.64.8
+          version: v2.12.2
 
   test:
     name: Test
@@ -52,7 +50,7 @@ jobs:
           - windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install dependencies
         if: startsWith(matrix.runs-on, 'ubuntu')
@@ -61,7 +59,7 @@ jobs:
           sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-0 xvfb
 
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
 
