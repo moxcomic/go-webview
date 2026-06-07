@@ -202,20 +202,7 @@ func bindingCallbackFn(idPtr, reqPtr, arg uintptr) uintptr {
 			resultValue, err = entry.fn(id, req)
 		}()
 
-		status := 0
-		var resultJSON string
-		switch {
-		case err != nil:
-			status = -1
-			resultJSON = jsonString(err.Error())
-		default:
-			if data, e := json.Marshal(resultValue); e == nil {
-				resultJSON = string(data)
-			} else {
-				status = -1
-				resultJSON = jsonString(e.Error())
-			}
-		}
+		status, resultJSON := marshalBindingResult(resultValue, err)
 
 		// Skip the native return if the webview was destroyed while we ran. The
 		// WaitGroup guarantees Destroy cannot free the handle until this
@@ -236,4 +223,18 @@ func bindingCallbackFn(idPtr, reqPtr, arg uintptr) uintptr {
 	}()
 
 	return 0
+}
+
+// marshalBindingResult turns a bound callback's (value, error) outcome into the
+// (status, JSON) pair the native webview_return expects: status -1 with the
+// error text on failure, status 0 with the JSON-encoded value on success.
+func marshalBindingResult(value any, callErr error) (int, string) {
+	if callErr != nil {
+		return -1, jsonString(callErr.Error())
+	}
+	data, err := json.Marshal(value)
+	if err != nil {
+		return -1, jsonString(err.Error())
+	}
+	return 0, string(data)
 }

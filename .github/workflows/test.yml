@@ -15,6 +15,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -40,6 +41,7 @@ jobs:
   test:
     name: Test
     runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:

@@ -8,11 +8,11 @@ import (
 	"github.com/ebitengine/purego"
 )
 
-// Loaded once, the first time a webview is created. loadErr records any failure
+// Loaded once, the first time a webview is created. errLoad records any failure
 // so NewWindow can return it instead of panicking.
 var (
 	loadOnce sync.Once
-	loadErr  error
+	errLoad  error
 )
 
 // Function pointers for native library functions.
